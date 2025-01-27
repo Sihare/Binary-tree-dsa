@@ -1,34 +1,41 @@
 class Solution {
 public:
-     long long ways[51][101][51];
-    const int MOD = 1e9 + 7;
-    
     int numOfArrays(int n, int m, int k) {
-         for (int j = 1; j <= m; j++) {
-                ways[1][j][1] = 1;
-        }
-        
-        for (int a = 1; a <= n; a++) {
-            for (int b = 1; b <= m; b++) {
-                for (int c = 1; c <= k; c++) {
-                    long long s = 0;
+        int MOD = 1e9 + 7;
 
-                     s = (s + b * ways[a - 1][b][c]) % MOD;
-                    
-                     for (int x = 1; x < b; x++) {
-						s = (s + ways[a - 1][x][c - 1]) % MOD;
+        // Create a 3D DP table
+        vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(k + 1, vector<int>(m + 1, 0)));
+
+        // Base case: when the array is fully built
+        for (int maxSoFar = 0; maxSoFar <= m; ++maxSoFar) {
+            dp[n][k][maxSoFar] = 1; // Valid if we achieve exactly `k` search cost
+        }
+
+        // Fill the DP table bottom-up
+        for (int idx = n - 1; idx >= 0; --idx) {
+            for (int searchCost = k; searchCost >= 0; --searchCost) {
+                for (int maxSoFar = 0; maxSoFar <= m; ++maxSoFar) {
+                    int result = 0;
+
+                    // Try all possible values for the current position
+                    for (int i = 1; i <= m; ++i) {
+                        if (i > maxSoFar) {
+                            // Increment search cost as `i` becomes the new maximum
+                            if (searchCost + 1 <= k) {
+                                result = (result + dp[idx + 1][searchCost + 1][i]) % MOD;
+                            }
+                        } else {
+                            // Keep the same search cost
+                            result = (result + dp[idx + 1][searchCost][maxSoFar]) % MOD;
+                        }
                     }
-					
-                    ways[a][b][c] = (ways[a][b][c] + s) % MOD;
+
+                    dp[idx][searchCost][maxSoFar] = result;
                 }
             }
         }
 
-        long long ans = 0;
-        for (int j = 1; j <= m; j++) {
-            ans = (ans + ways[n][j][k]) % MOD;
-        }
-        
-        return int(ans);
+        // The result is stored in dp[0][0][0]
+        return dp[0][0][0];
     }
 };
