@@ -1,29 +1,20 @@
-#include <vector>
-#include <unordered_map>
-#include <algorithm>
-using namespace std;
-
 class Solution {
 public:
     int maxSumDistinctTriplet(vector<int>& x, vector<int>& y) {
-        int n = x.size();
-        if (n < 3) return -1;
-
-        unordered_map<int, int> mp;
-
-        for (int i = 0; i < n; i++) {
-            mp[x[i]] = max(mp[x[i]], y[i]);
+        unordered_map<int,vector<int>>mp;
+        for(int i=0;i<x.size();i++){
+          mp[x[i]].push_back(y[i]);
         }
 
-        if (mp.size() < 3) return -1;
-
-        vector<int> bestY;
-        for (auto& [key, val] : mp) {
-            bestY.push_back(val);
+        if(mp.size()<3){
+          return -1;
         }
-
-        sort(bestY.rbegin(), bestY.rend());
-
-        return bestY[0] + bestY[1] + bestY[2];
+   vector<int>ans;
+        for(auto &i:mp){
+          vector<int>v=i.second;
+        ans.push_back(*max_element(v.begin(),v.end()));
+        }
+        sort(ans.begin(),ans.end(),greater<int>());
+        return ans[0]+ans[1]+ans[2];
     }
 };
