@@ -16,9 +16,9 @@ class Solution {
 
         // Base case 
         if( pos >= words.length ){
-            System.out.println(subsets) ;
+        //    System.out.println(subsets) ;
             return 0;
-}
+      }
         // exclude the words[pos] -> What is the score of subset => exclude value 
                 int exclude = 0 + fun( words , freq , score , pos+1 , subsets+" , x , ") ;
 
@@ -44,11 +44,11 @@ class Solution {
         }
 
         if( isPossible ){
-            System.out.println( "word = " +word+"  , score = "+ wordScore) ;
+         //   System.out.println( "word = " +word+"  , score = "+ wordScore) ;
                 include = wordScore + fun( words , freq , score , pos+1 , subsets+" , "+word) ;
                 
         }
-       
+     
             // If isPossible is false then bring back the prev state of freq array          
             for( int i = 0 ; i < word.length() ; i++ ){
 
@@ -57,7 +57,8 @@ class Solution {
                 freq[ch-'a']++ ;
             }
 
-       
+
+        
 
 
 
