@@ -13,7 +13,7 @@ public:
     long long minNumberOfSeconds(int h, vector<int>& a) {
         long long ans=0;
         long long l=1;
-        long long r=1e12*(long long)h/a.size();
+        long long int r=1e18;
 
         while(l<=r){
           long long m=l+(r-l)/2;
