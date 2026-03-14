@@ -1,33 +1,29 @@
 class Solution {
 public:
+    string ans;
     
-    void func(int n, string str, vector<string>&ans){
-        if(str.size() == n){
-            ans.push_back(str);
+    void solve(int len, int& cnt, int n, vector<char>& v, string& s) {
+        if (len == n) {
+            if (--cnt == 0) {
+                ans = s;
+            }
             return;
         }
-        
-        for(int i = 0; i<3;i++){
-            if(str.empty()==false and 'a'+i == str.back()){
-                continue;
-            }
-            else{
-                str.push_back('a'+i);
-                func(n, str, ans);
-                str.pop_back();
+        for (int i = 0; i < 3; i++) {
+            if (len == 0 || s.back() != v[i]) {
+                s.push_back(v[i]);
+                solve(len + 1, cnt, n, v, s);
+                s.pop_back();
+                if (cnt == 0) return;  
             }
         }
     }
     
     string getHappyString(int n, int k) {
-        vector<string>ans;
-        string str;
-        func(n, str,ans);
-        
-        if(ans.size()>=k){
-            return ans[k-1];
-        }
-        
-        return "";
+        vector<char> v = {'a', 'b', 'c'};
+        ans = "";
+        string s;
+        solve(0, k, n, v, s);
+        return ans;
     }
 };
