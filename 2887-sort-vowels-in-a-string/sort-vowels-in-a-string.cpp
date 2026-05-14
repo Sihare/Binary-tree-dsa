@@ -10,17 +10,15 @@ public:
         }
     }
 
-    // Sort vowels
-    sort(vowels.begin(), vowels.end());
+     sort(vowels.begin(), vowels.end());
 
-    // Build the resulting string
-    string result;
-    int vowelIndex = 0, consonantIndex = 0;
+     string result;
+    int j = 0, i = 0;
     for (char c : s) {
         if (tolower(c) == 'a' || tolower(c) == 'e' || tolower(c) == 'i' || tolower(c) == 'o' || tolower(c) == 'u') {
-            result.push_back(vowels[vowelIndex++]);
+            result.push_back(vowels[j++]);
         } else {
-            result.push_back(consonants[consonantIndex++]);
+            result.push_back(consonants[i++]);
         }
     }
 
