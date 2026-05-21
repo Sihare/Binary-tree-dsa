@@ -47,7 +47,7 @@ public:
     }
 
     int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
-        TrieNode* root = getTrieNode(); //TRIE
+        TrieNode* root = getTrieNode();  
 
         for(int num : arr1) {
             insert(num, root);
